@@ -1,0 +1,28 @@
+<div class="container">
+  <%= link_to "New Order", new_order_path, class: "btn btn-primary" %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer Name</th>
+        <th>Warehouse</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr>
+          <td><%= order.id %></td>
+          <td><%= order.customer_name %></td>
+          <td><%= order.warehouse.full_address %></td>
+          <td>
+            <%= link_to "Show", order_path(order) %>
+            <%= link_to "Edit", edit_order_path(order) %>
+            <%= link_to "Delete", order_path(order), method: :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,35 @@
+<nav class="navbar navbar-dark bg-dark navbar-expand-md">
+  <div class="container">
+    <%= link_to "Inventory", root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-target="#navbar-content">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-space-between" id="navbar-content">
+      <% if user_signed_in? %>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <%= link_to "Products", products_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Warehouse", warehouses_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Stocks", stocks_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Orders", orders_path, class: "nav-link" %>
+          </li>
+        </ul>
+      <% end %>
+      <div class="text-white">
+        <% if user_signed_in? %>
+          Hi, <%= current_user.email %>!
+          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+        <% else %>
+          <%= link_to "Sign In", user_session_path, class: "btn btn-success" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-outline-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>

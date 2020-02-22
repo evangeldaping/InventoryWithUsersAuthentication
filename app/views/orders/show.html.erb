@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Order (ID: <%= @order.id %>)</h2>
+  <small>Customer</small>
+  <h4><%= @order.customer_name %></h4>
+  <small>Warehouse<small>
+  <h4><%= @order.warehouse.full_address %></h4>
+  <hr />
+  <%= render "order_items/form",
+             order_item: @order_item,
+             products: @products,
+             order: @order %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order_items.each do |order_item| %>
+        <% next if order_item.new_record? %>
+        <tr>
+          <td><%= order_item.product.name %></td>
+          <td><%= order_item.quantity %></td>
+          <td><%= link_to "Delete", order_order_item_path(@order, order_item), method: :delete %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

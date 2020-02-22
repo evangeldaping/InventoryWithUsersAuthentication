@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Stocks</h1>
+
+  <%= link_to "New Stock", new_stock_path, class: "btn btn-primary" %>
+  <table id="stocks-table" class="table">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Stock Count</th>
+        <th>Warehouse</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @stocks.each do |stock| %>
+        <tr id="stock--<%= stock.id %>">
+          <td id="stock--<%= stock.id %>_product">
+            <%= stock.product.name %>
+          </td>
+          <td id="stock--<%= stock.id %>_count">
+            <%= stock.count %>
+          </td>
+          <td id="stock--<%= stock.id %>_warehouse">
+            <%= stock.warehouse.street + " " + stock.warehouse.city + " " + stock.warehouse.province %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
