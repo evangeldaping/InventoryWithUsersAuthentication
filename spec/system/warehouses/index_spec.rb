@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Index of all Warehouses page', type: :system do
+  include AuthHelper
   it 'has a table of warehouses', :js do
     create_list(:warehouse, 4)
     warehouse = create(:warehouse, street: 'Tabora', city: 'Manila', province:
     'NCR')
 
+    sign_in_as_user
     visit '/warehouses'
 
     expect(page).to have_a_warehouse_table
@@ -33,6 +35,7 @@ RSpec.describe 'Index of all Warehouses page', type: :system do
     warehouse = create(:warehouse, street: 'Tabora', city: 'Manila', province:
     'NCR')
 
+    sign_in_as_user
     visit '/warehouses'
 
     page.find("table tbody tr#warehouse--#{warehouse.id} td#warehouse--#{warehouse.id}_actions .delete").click

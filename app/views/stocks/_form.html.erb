@@ -1,8 +1,4 @@
-<%= form_with model: stock, local: true, id: "stock-form" do |f| %>
-<div class="form-group">
-  <%= f.select :warehouse_id,
-               @warehouses.all.map { |w| [w.full_address, w.id] } %>
-</div>
+<%= form_with model: stock, local: true, id: "stock-form", url: warehouse_stocks_path(warehouse) do |f| %>
 <div class="form-group">
   <%= f.select :product_id, @products.all.map { |p| [p.name, p.id] } %>
 </div>

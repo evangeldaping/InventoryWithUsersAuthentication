@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Index of all Products page', type: :system do
+  include AuthHelper
+
   it 'has a table of products', :js do
     create_list(:product, 4)
     product = create(:product, sku: 'SKU-001', name: 'Kobes')
 
+    sign_in_as_user
     visit '/products'
 
     expect(page).to have_a_products_table
@@ -29,6 +32,7 @@ RSpec.describe 'Index of all Products page', type: :system do
   it 'allows to delete a product', :js do
     product = create(:product, sku: 'SKU-001', name: 'Kobes')
 
+    sign_in_as_user
     visit '/products'
     page.find("table tbody tr#product--#{product.id} td#product--#{product.id}_actions .delete").click
     page.driver.browser.switch_to.alert.accept
