@@ -5,7 +5,10 @@ class WarehousesController < AdminController
     @warehouses = Warehouse.all
   end
 
-  def show; end
+  def show
+    @stock = @warehouse.stocks.build
+    @products = Product.all
+  end
 
   def edit; end
 

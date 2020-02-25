@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Shows the Warehouse page', type: :system do
+  include AuthHelper
   it 'shows all warehouse information', :js do
     warehouse = create(:warehouse, street: 'Tabora', city: 'Manila', province:
     'NCR')
 
+    sign_in_as_user
     visit "/warehouses/#{warehouse.id}"
 
     expect(page).to have_attribute_for('street', value: 'Tabora', record: warehouse)

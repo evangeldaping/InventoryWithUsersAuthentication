@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Create a warehouse page', type: :system do
+  include AuthHelper
   it 'allows me to create a new warehouse' do
+
+    sign_in_as_user
     visit '/warehouses/new'
 
     within('#warehouse-form') do
@@ -22,6 +25,7 @@ RSpec.describe 'Create a warehouse page', type: :system do
   it 'shows me test errors' do
     create(:warehouse, street: 'Tabora')
 
+    sign_in_as_user
     visit '/warehouses/new'
 
     submit_form

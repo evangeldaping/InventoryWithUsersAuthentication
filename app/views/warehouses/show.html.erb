@@ -1,6 +1,10 @@
 <h1>Warehouse</h1>
 <!-- <hr /> -->
 <%= link_to "Back to Warehouses", warehouses_path, class: 'btn btn-primary' %>
+<!-- render form -->
+<div class="container">
+  <%= render 'stocks/form', stock: @stock, warehouse: @warehouse %>
+</div>
 <table class="table">
   <tbody>
     <tr>
@@ -23,3 +27,9 @@
     </tr>
   </tbody>
 </table>
+
+<%= @warehouse.products.each do |product| %>
+
+  <%= product.name%>
+  <%= @warehouse.inventory_count(product)%>
+<%end %>
