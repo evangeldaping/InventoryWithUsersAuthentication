@@ -1,10 +1,13 @@
+# Examples:
+#
+#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+#   Character.create(name: 'Luke', movie: movies.first)
 2.times do
   Product.create!(
     name: Faker::Device.model_name,
     sku: Faker::Device.serial
   )
 end
-
 Warehouse.create!([
   {
     street: 'First Rd',
@@ -22,3 +25,19 @@ Stock.create!(
   warehouse: Warehouse.all.sample,
   count: 10
 )
+
+product = Product.first
+warehouse = Warehouse.first
+
+Stock.create!([
+  {
+    product: product,
+    warehouse: warehouse,
+    count: 10
+  },
+  {
+    product: product,
+    warehouse: warehouse,
+    count: 5
+  }
+])

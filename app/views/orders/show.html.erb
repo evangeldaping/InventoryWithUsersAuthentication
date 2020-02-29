@@ -4,11 +4,53 @@
   <h4><%= @order.customer_name %></h4>
   <small>Warehouse<small>
   <h4><%= @order.warehouse.full_address %></h4>
+  
   <hr />
-  <%= render "order_items/form",
-             order_item: @order_item,
-             products: @products,
-             order: @order %>
+
+  <div class="container">
+    <dl class="row">
+      <dt class="col-sm-2">Name</dt>
+      <dd class="col-sm-10" id=<%= "order--#{@order.id}_customer_name" %> ><%= @order.customer_name %></dd>
+      <dt class="col-sm-2">Warehouse</dt>
+      <dd class="col-sm-10" id=<%= "order--#{@order.id}_full_address" %> ><%= "#{@order.warehouse.full_address}" %></dd>
+    </dl>
+  </div>
+  <div class="container">
+    <%= react_component "Order",
+        {
+          id: @order.id,
+          order_items: @order.order_items.as_json(
+            only: %i[id quantity],
+            include: {
+              product: {
+                only: %i[sku name]
+              }
+            }
+          )
+        } %>
+  </div>
+  <div class="container">
+    <%= render 'order_items/form', order: @order, order_item: @order_item, products: @products, form_action: order_order_items_path(@order) %>
+    <%= link_to 'Back', orders_path, class: 'btn btn-danger' %>
+  </div>
+
+
+  <hr />
+
+  <div class="container">
+  <%= react_component "Order",
+      {
+        id: @order.id,
+        order_items: @order.order_items.as_json(
+          only: %i[id quantity],
+          include: {
+            product: {
+              only: %i[sku name]
+            }
+          }
+        )
+      } %>
+</div>
 
   <table class="table">
     <thead>
