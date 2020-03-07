@@ -40,28 +40,6 @@ class Warehouse extends Component {
             console.log(error.response);
         }
     };
-    deleteStock = async stockId => {
-        try {
-            let { data, status } = await axios.delete(
-                `/warehouses/${this.props.id}/stocks/${stockId}`
-            );
-            if (status === 200) {
-                this.setState(({ stocks }) => ({
-                    stocks: _.filter(
-                    stocks,
-                    stock => !(stock.id === data.id)
-                    ),
-                    message: "Successfully deleted stock.",
-                    variant: "danger"
-                }));
-            }
-        } catch (error) {
-            const {
-                response: { data }
-            } = error;
-            console.log(data);
-        }
-    };
     render = () => (
         <>
             {!_.isNull(this.state.message) && !_.isNull(this.state.variant) && (
@@ -104,7 +82,6 @@ class Warehouse extends Component {
                     <tr>
                         <td>Product</td>
                         <td>Quantity</td>
-                        <td>Actions</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -115,17 +92,6 @@ class Warehouse extends Component {
                                 <tr key={stock.id}>
                                 <td>{stock.product.name}</td>
                                 <td>{stock.count}</td>
-                                <td>
-                                    <ButtonGroup>
-                                    <Button variant="primary">&#9998;</Button>
-                                    <Button
-                                        variant="danger"
-                                        onClick={() => this.deleteStock(stock.id)}
-                                    >
-                                        &#128465;
-                                    </Button>
-                                    </ButtonGroup>
-                                </td>
                                 </tr>
                             )
                     )}

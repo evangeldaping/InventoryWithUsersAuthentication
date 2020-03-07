@@ -2,16 +2,16 @@ class StocksController < AdminController
   before_action :set_stock, only: %i[show]
   before_action :set_form_dependencies, only: %i[new edit]
   before_action :set_warehouse
-  # def index
-  #   @stocks = Stock.all
-  # end
-  #
-  # def show; end
-  #
-  # def new
-  #   @stock = Stock.new
-  # end
+  def index
+    @stocks = Stock.all
+  end
 
+  def show; end
+
+  def new
+    @stock = Stock.new
+  end
+  #
   # def create
   #   @stock = @warehouse.stocks.build(stock_params)
   #
@@ -39,7 +39,7 @@ class StocksController < AdminController
         }
       )
     else
-      render json: { errors: @stocke.errors }, status: :unprocessable_entity
+      render json: { errors: @stocks.errors }, status: :unprocessable_entity
     end
   end
 

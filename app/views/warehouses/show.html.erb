@@ -1,44 +1,33 @@
-<h1>Warehouse</h1>
-<!-- <hr /> -->
-<%= link_to "Back to Warehouses", warehouses_path, class: 'btn btn-primary' %>
-<!-- render form -->
 <div class="container">
-   <%# <%= render 'stocks/form', stock: @stock, warehouse: @warehouse %>
-</div>
-<table class="table">
-  <tbody>
-    <tr>
-      <td>Street</td>
-      <td id="warehouse--<%= @warehouse.id %>_street">
-        <%= @warehouse.street %>
-      </td>
-    </tr>
-    <tr>
-      <td>City</td>
-      <td id="warehouse--<%= @warehouse.id %>_city">
-        <%= @warehouse.city %>
-      </td>
-    </tr>
-    <tr>
-      <td>Province</td>
-      <td id="warehouse--<%= @warehouse.id %>_province">
-        <%= @warehouse.province %>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<%= @warehouse.products.each do |product| %>
-
-  <%= product.name%>
-  <%= @warehouse.inventory_count(product)%>
-
+  <h1>Warehouse</h1>
+  <%= link_to "Back to Warehouses", warehouses_path, class: 'btn btn-primary' %>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td>Street</td>
+        <td id="warehouse--<%= @warehouse.id %>_street">
+          <%= @warehouse.street %>
+        </td>
+      </tr>
+      <tr>
+        <td>City</td>
+        <td id="warehouse--<%= @warehouse.id %>_city">
+          <%= @warehouse.city %>
+        </td>
+      </tr>
+      <tr>
+        <td>Province</td>
+        <td id="warehouse--<%= @warehouse.id %>_province">
+          <%= @warehouse.province %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<div class="container">
   <%= react_component "Warehouse",
     {
       id: @warehouse.id,
-      products: @warehouse.products.map do |product|
-        ProductSerializer.new(product, warehouse: @warehouse)
-      end,
+      products: @products.as_json(only: %i[name id]),
       stocks: @warehouse.stocks.as_json(
         only: %i[id count],
         include: {
@@ -47,7 +36,5 @@
           }
         }
       )
-    }
-  %>
-
-<%end %>
+    } %>
+</div>
