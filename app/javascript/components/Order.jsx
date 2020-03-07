@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Table, Button, ButtonGroup, Form, Alert } from "react-bootstrap";
 import _ from "lodash";
+
 import axios from "../config/axios";
+
 class Order extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       message: null,
       orderItems: _.mapKeys(props.orderItems, orderItem => orderItem.id),
@@ -14,11 +17,17 @@ class Order extends Component {
       variant: null
     };
   }
+
   deleteOrderItem = async orderItemId => {
     try {
+      // let means changing variable
+      //ajax start
       let { data, status } = await axios.delete(
+        // url / params / config
         `/orders/${this.props.id}/order_items/${orderItemId}`
       );
+      //ajax end
+
       if (status === 200) {
         this.setState(({ orderItems }) => ({
           orderItems: _.filter(
@@ -30,11 +39,17 @@ class Order extends Component {
         }));
       }
     } catch (error) {
-      alert("Can't delete item.");
+      const {
+        response: { data }
+      } = error;
+
+      console.log(data);
     }
   };
+
   createOrderItem = async e => {
     e.preventDefault();
+
     try {
       let { data, status } = await axios.post(
         `/orders/${this.props.id}/order_items`,
@@ -45,6 +60,7 @@ class Order extends Component {
           }
         }
       );
+
       if (status === 200) {
         this.setState(({ orderItems }) => ({
           orderItems: { ...orderItems, [data.id]: data },
@@ -53,9 +69,14 @@ class Order extends Component {
         }));
       }
     } catch (error) {
-      alert("Can't create order item.");
+      const {
+        response: { data }
+      } = error;
+
+      console.log(error.response);
     }
   };
+
   render = () => (
     <>
       {!_.isNull(this.state.message) && !_.isNull(this.state.variant) && (
@@ -83,7 +104,6 @@ class Order extends Component {
           </Form.Control>
           <Form.Group>
             <Form.Control
-              type="number"
               placeholder="Qty"
               value={this.state.qty}
               onChange={e => this.setState({ qty: e.target.value })}

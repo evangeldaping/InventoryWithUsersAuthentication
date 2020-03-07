@@ -12,7 +12,9 @@ class OrderItemsController < ApplicationController
     @order_item.save!
     redirect_to order_path(@order)
   end
+
   def edit; end
+
   def update
     respond_to do |format|
       if @order_item.update(order_items_params)
@@ -22,10 +24,14 @@ class OrderItemsController < ApplicationController
       end
     end
   end
+
   def destroy
     @order_item.destroy
-    render json: { id: @order_item.id }
+    respond_to do |format|
+     format.html { redirect_to order_path(@order), notice: 'Order Item was successfully deleted.' }
+   end
   end
+  
   private
   def set_order
     @order = Order.find(params[:order_id])

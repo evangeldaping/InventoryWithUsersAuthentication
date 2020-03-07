@@ -4,7 +4,7 @@
   <h4><%= @order.customer_name %></h4>
   <small>Warehouse<small>
   <h4><%= @order.warehouse.full_address %></h4>
-  
+
   <hr />
 
   <div class="container">
@@ -30,45 +30,8 @@
         } %>
   </div>
   <div class="container">
-    <%= render 'order_items/form', order: @order, order_item: @order_item, products: @products, form_action: order_order_items_path(@order) %>
     <%= link_to 'Back', orders_path, class: 'btn btn-danger' %>
   </div>
 
 
-  <hr />
-
-  <div class="container">
-  <%= react_component "Order",
-      {
-        id: @order.id,
-        order_items: @order.order_items.as_json(
-          only: %i[id quantity],
-          include: {
-            product: {
-              only: %i[sku name]
-            }
-          }
-        )
-      } %>
-</div>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @order_items.each do |order_item| %>
-        <% next if order_item.new_record? %>
-        <tr>
-          <td><%= order_item.product.name %></td>
-          <td><%= order_item.quantity %></td>
-          <td><%= link_to "Delete", order_order_item_path(@order, order_item), method: :delete %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
 </div>

@@ -5,16 +5,22 @@ class WarehousesController < AdminController
     @warehouses = Warehouse.all
   end
 
-  def show
-    @stock = @warehouse.stocks.build
-    @products = Product.all
-  end
-
-  def edit; end
-
   def new
     @warehouse = Warehouse.new
   end
+
+  def show
+    # @stock = @warehouse.stocks.build
+    # @products = Product.all
+    @stock = @warehouse.stocks.new
+
+    respond_to do |format|
+      format.json { render json: @stock }
+      format.html
+    end
+  end
+
+  def edit; end
 
   def create
     @warehouse = Warehouse.new(warehouse_params)

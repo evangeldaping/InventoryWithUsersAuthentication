@@ -3,7 +3,7 @@
 <%= link_to "Back to Warehouses", warehouses_path, class: 'btn btn-primary' %>
 <!-- render form -->
 <div class="container">
-  <%= render 'stocks/form', stock: @stock, warehouse: @warehouse %>
+   <%# <%= render 'stocks/form', stock: @stock, warehouse: @warehouse %>
 </div>
 <table class="table">
   <tbody>
@@ -32,4 +32,22 @@
 
   <%= product.name%>
   <%= @warehouse.inventory_count(product)%>
+
+  <%= react_component "Warehouse",
+    {
+      id: @warehouse.id,
+      products: @warehouse.products.map do |product|
+        ProductSerializer.new(product, warehouse: @warehouse)
+      end,
+      stocks: @warehouse.stocks.as_json(
+        only: %i[id count],
+        include: {
+          product: {
+            only: %i[sku name]
+          }
+        }
+      )
+    }
+  %>
+
 <%end %>
